@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	int number, val;
 	int iter = 0;
 	//int b;
-	int number_array[10];// = (int*)malloc(1*sizeof(int));
+	int number_array[10];// = (int*)malloc(10 * sizeof *number_array);
 	size_t len;
 	
 	while((args = getopt(argc, argv, "f:s")) != EOF){
@@ -36,21 +36,22 @@ int main(int argc, char *argv[]) {
 				while(fscanf(input, "%i", &number) == 1){
 					//len = sizeof(number_array) / sizeof(number_array[0]);
 					//printf("%i, %i, %i\n", number, iter, len);
-					//if(iter == len){
+					//if(iter >= len){
 					//	b = iter + 1;
-					//	number_array = (int*)realloc(number_array, sizeof(int)*b);
+					//	number_array = (int*)realloc(number_array, sizeof(int)*iter+1);
 					//}
 					number_array[iter] = number;
 					iter++;
 				}
 				len = sizeof(number_array) / sizeof(number_array[0]);
+				break;
 			case 's':
 				sorted(number_array, len);
 				break;
 		}
-		argc -= optind;
-		argv += optind;
 	}
+	argc -= optind;
+	argv += optind;
 	
 	print_array(number_array, len);
 	
