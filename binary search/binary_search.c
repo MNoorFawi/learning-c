@@ -43,6 +43,7 @@ int main(int argc, char *argv[]) {
 					number_array[iter] = number;
 					iter++;
 				}
+				fclose(input);
 				len = sizeof(number_array) / sizeof(number_array[0]);
 				break;
 			case 's':
