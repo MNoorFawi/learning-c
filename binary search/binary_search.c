@@ -25,9 +25,9 @@ int main(int argc, char *argv[]) {
 	FILE *input;
 	int number, val;
 	int iter = 0;
-	//int b;
-	int number_array[10];// = (int*)malloc(10 * sizeof *number_array);
-	size_t len;
+	int b = 2; // initial capacity
+	int *number_array = (int*)malloc(b*sizeof(int));
+	//size_t len;
 	
 	while((args = getopt(argc, argv, "f:s")) != EOF){
 		switch(args){
@@ -35,31 +35,31 @@ int main(int argc, char *argv[]) {
 				input = fopen(optarg, "r");
 				while(fscanf(input, "%i", &number) == 1){
 					//len = sizeof(number_array) / sizeof(number_array[0]);
-					//printf("%i, %i, %i\n", number, iter, len);
-					//if(iter >= len){
-					//	b = iter + 1;
-					//	number_array = (int*)realloc(number_array, sizeof(int)*iter+1);
-					//}
+					//printf("%i, %i, %i\n", number, iter, b);
+					if(iter >= b){
+						b = iter + 1; // new capacity to reallocate
+						number_array = (int*)realloc(number_array, sizeof(int)*b);
+					}
 					number_array[iter] = number;
 					iter++;
 				}
 				fclose(input);
-				len = sizeof(number_array) / sizeof(number_array[0]);
+				//len = sizeof(number_array) / sizeof(number_array[0]);
 				break;
 			case 's':
-				sorted(number_array, len);
+				sorted(number_array, b);
 				break;
 		}
 	}
 	argc -= optind;
 	argv += optind;
 	
-	print_array(number_array, len);
+	print_array(number_array, b);
 	
 	printf("Enter a Value to Search: ");
 	while(scanf_s("%i", &val) == 1){
 		printf("%i is at index %i\n", val, 
-				binary_search(number_array, len, val));
+				binary_search(number_array, b, val));
 		printf("Enter a Value to Search: ");
 	}
 	// free(number_array);
