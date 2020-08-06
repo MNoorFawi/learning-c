@@ -1,7 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "sort.h"
+
+void print_array(int *array, size_t len)
+{
+    int i;
+    for (i = 0; i < len; i++)
+        printf("%i ", array[i]);
+    printf("\n");
+}
+
+int comparator(const void* a, const void* b){
+    int aa = *(int*)a;
+    int bb = *(int*)b;
+    return aa - bb;
+}
 
 void range_binary_search(int *array, int len, int val, int *res) {
     int right = 0;
@@ -58,7 +71,7 @@ int main(int argc, char *argv[]) {
     fclose(input);
 	len = sizeof(number_array) / sizeof(number_array[0]);
 
-	sorted(number_array, len);
+	qsort(number_array, len, sizeof(int), comparator);
 	print_array(number_array, len);
 
 	printf("Enter a Value to Search: ");
