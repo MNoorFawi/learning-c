@@ -46,8 +46,8 @@ int main(int argc, char **argv){
 	    // pid == 0
 	    else if(!pid){
 	        if(execlp("python", "python", "./dvd_recommender.py", cid, (char*)NULL) == -1){
-                printf("\n\tCan't run script: %s\n", strerror(errno));
-                return 1;
+		    printf("\n\tCan't run script: %s\n", strerror(errno));
+                    return 1;
 	        }
 	        exit(0);
 	    }
