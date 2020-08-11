@@ -2,19 +2,29 @@
 
 To check that the makefile is made perfectly with proper separator:
 ```bash
-cat -e -t -v  Makefile
+$cat -e -t -v  Makefile
 ```
 Commands lines should start with **^I**.
 
 In **Cygwin** before running program we should run this command first to include shared library which is lib folder:
 ```bash
-PATH="$PATH:./lib"
+$PATH="$PATH:./lib"
 ```
 
 Let's run the program:
 
 ```bash
-./prog
+$make builddll
+
+gcc -fPIC -c stack.c -o stack.o
+gcc -shared stack.o -o ./lib/libstack.dll.a
+
+$make buildexe
+
+gcc -c prog.c
+gcc prog.o -L./lib -lstack -o prog
+
+$./prog
 
         Stack is empty
 
@@ -27,5 +37,6 @@ Value 91 is popped from stack
 
 Stack now after popping out
 13 11 19
+$
 ```
 
