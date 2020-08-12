@@ -14,6 +14,10 @@ cdef extern from "hash_table.h":
     int get_size(map* dictionary)
     int search(map* dictionary, int key)
 
+#ctypedef fused int_str:
+#    int
+#    str
+
 cdef class CDict:
     cdef map *m
 
@@ -28,22 +32,24 @@ cdef class CDict:
     #def value(self):
     #    return self.m.value
 
-    def insert_key(self, key, value):
+    cpdef void insert_key(self, int key, int value):
         insert(self.m, key, value)
 
-    def remove_key(self, key):
+    cpdef void remove_key(self, int key):
         remove_element(self.m, key)
 
-    def display(self):
-        return print_hashtable(self.m)
+    cpdef display(self):
+        print_hashtable(self.m)
 
-    def size(self):
+    cpdef int size(self):
         return get_size(self.m)
 
-    def search(self, key):
-        v = search(self.m, key)
-        if v == -1:
-            return "Key doesn't exist"
+    cpdef int search(self, int key):
+        cdef int v = search(self.m, key)
+        #cdef str x
+        #if v == -1:
+        #    x = "Key doesn't exist"
+        #    return x
         return v
 
 
