@@ -81,8 +81,7 @@ void dequeue(pq ** front, pq ** rear) {
     * front = ( * front) -> next;
 
     if ( * rear == temp)
-      *
-      rear = ( * rear) -> next; // to make *rear NULL
+      * rear = ( * rear) -> next; // to make *rear NULL
     printf("\nTask (%s) with priority (%f) has been removed\n",
       s, p);
     free(temp); // it is not needed anymore (removed)
