@@ -11,7 +11,8 @@
 int main() {
     catch_signal(SIGINT, terminate); // to handle signals
 
-    FILE * in , * out; in = fopen("websites.txt", "r");
+    FILE * in , * out; 
+    in = fopen("websites.txt", "r");
     out = fopen("urls.txt", "w");
     char web[STRLEN], command[STRLEN], url[STRLEN];
 
@@ -19,7 +20,7 @@ int main() {
 
     // dup2 changes location in the descriptors table
     // fileno(file) gets you number of file in descriptors table
-    dup2(fileno( in ), 0); // point the pipe to the in file instead of stdin
+    dup2(fileno(in), 0); // point the pipe to the in file instead of stdin
     dup2(fileno(out), 1); // redirect stdout to out file
 
     // piping two processes happens that way
