@@ -1,9 +1,6 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <unistd.h>
-
 #include "sort.h"
 
 int binary_search(int * array, size_t len, int val) {
@@ -44,7 +41,7 @@ int main(int argc, char * argv[]) {
           number_array = (int * ) realloc(number_array, sizeof(int) * b);
         }
         number_array[iter] = number;
-        iter++;
+        iter++; // to keep track of malloc array length
       }
       fclose(input);
       //len = sizeof(number_array) / sizeof(number_array[0]);
