@@ -1,3 +1,5 @@
+#define INIT_SIZE 10
+
 // initialize a stack (LIFO)
 struct stck{
     int *val;

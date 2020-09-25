@@ -5,6 +5,7 @@
 void create_stack(stack *st){
     st->indx = -1;
     st->size = 0;
+	st->val = (int*)malloc(sizeof(int)*INIT_SIZE);
 }
 
 // check empty
@@ -17,6 +18,8 @@ int is_empty(stack *st){
 
 // push/append
 void push(stack *st, int new_val){
+	if(st->size >= INIT_SIZE)
+		st->val = (int*)realloc(st->val, sizeof(int) * (st->size + INIT_SIZE));
     st->indx++;
     st->val[st->indx] = new_val;
     st->size++;
