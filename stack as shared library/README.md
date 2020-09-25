@@ -11,6 +11,11 @@ In **Cygwin** before running program we should run this command first to include
 $PATH="$PATH:./lib"
 ```
 
+In **linux**:
+```bash
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
+```
+
 Let's run the program:
 
 ```bash
