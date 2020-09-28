@@ -17,8 +17,8 @@ char * add_char(char * a, char * b) {
 #define add_func(x, y)\
 _Generic((x), \
     int: add_int, float: add_float, char *: add_char, \
-    default: add_int)\
-  (x, y)
+    default: add_int)(x, y)
+
 
 int main() {
     int a = 1, b = 2;
