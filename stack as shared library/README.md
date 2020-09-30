@@ -37,11 +37,31 @@ Some values were supposedly added, let's check ...
 
         Stack is not empty now
 
-13 11 19 91
-Value 91 is popped from stack
+1 13 11 13 19 19 13 91
+
+91 was popped
 
 Stack now after popping out
-13 11 19
+1 13 11 13 19 19 13
+
+1 was popped from left
+
+Stack now after popping out from both sides:
+13 11 13 19 19 13
+
+Now Search for value 13
+Values exist at indices:
+0 2 5
+
+Now Search for value 11
+Values exist at indices:
+1
+
+Now Search for value 19
+Values exist at indices:
+3 4
+
+Now let's free memory
 $
 ```
 
