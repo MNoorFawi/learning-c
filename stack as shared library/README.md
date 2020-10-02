@@ -1,4 +1,4 @@
-# Creating a LIFO Stack data structure in C
+# Creating a LIFO & FIFO Stack data structure in C
 
 To check that the makefile is made perfectly with proper separator:
 ```bash
