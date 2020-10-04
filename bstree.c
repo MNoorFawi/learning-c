@@ -1,14 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct tnode {
   int data;
+  int age;
+  char * name;
   struct tnode * lchild, * rchild;
 };
 
 typedef struct tnode tn;
 
-tn * insert(tn * p, int val) {
+tn * insert(tn * p, int val, int age, char * name) {
   tn * temp1, * temp2;
 
   if (p == NULL) {
@@ -18,6 +21,8 @@ tn * insert(tn * p, int val) {
       exit(0);
     }
     p -> data = val;
+    p -> age = age;
+    p -> name = strdup(name);
     p -> lchild = p -> rchild = NULL;
   } else {
     temp1 = p;
@@ -39,11 +44,15 @@ tn * insert(tn * p, int val) {
         exit(0);
       }
       temp2 -> data = val;
+      temp2 -> age = age;
+      temp2 -> name = strdup(name);
       temp2 -> lchild = temp2 -> rchild = NULL;
     } else {
       temp2 -> rchild = (tn * ) malloc(sizeof(tn));
       temp2 = temp2 -> rchild;
       temp2 -> data = val;
+      temp2 -> age = age;
+      temp2 -> name = strdup(name);
       temp2 -> lchild = temp2 -> rchild = NULL;
     }
   }
@@ -202,13 +211,19 @@ tn * delete(tn * p, int val) {
 
 void main() {
   tn * root = NULL, * temp = NULL;
-  int n, x;
+  int n, x, a;
+  char * c; //= (char*)malloc(sizeof(char)*20);
   printf("Enter the number of nodes\n");
   scanf("%d", & n);
   while (n--> 0) {
     printf("Enter the data value\n");
     scanf("%d", & x);
-    root = insert(root, x);
+    printf("Enter the age\n");
+    scanf("%d", & a);
+    printf("Enter the name\n");
+    scanf("%s", c);
+    //fgets(c,sizeof(c),stdin);
+    root = insert(root, x, a, c);
   }
   puts("The created tree is:");
   inorder(root);
@@ -216,13 +231,23 @@ void main() {
   puts("Enter the value of the node to be searched for");
   scanf("%d", & n);
   temp = search(root, n);
-  if (temp != NULL)
+  if (temp != NULL) {
     puts("the data value is present in the tree");
-  else
+    printf("name is: %s and age is: %d\n", temp -> name, temp -> age);
+  } else
     puts("the data value is not present in the tree");
   puts("Enter the value of the node to be deleted");
   scanf("%d", & n);
   root = delete(root, n);
   puts("The tree after deletion is:\n");
   inorder(root);
+  puts("Enter the value of the node to be searched for");
+  scanf("%d", & n);
+  temp = search(root, n);
+  if (temp != NULL) {
+    puts("the data value is present in the tree");
+    printf("name is: %s and age is: %d\n", temp -> name, temp -> age);
+  } else
+    puts("the data value is not present in the tree");
+  puts("Enter the value of the node to be deleted");
 }
