@@ -64,6 +64,7 @@ _Generic((y), \
   
 #define PASTE(x, y) x ## y
 
+// Macros to help dynamically define the function based on input macro definition at compile time for TYPE & TYPE2
 #define SEARCH_VAL(Type) PASTE(search_, Type)
 #define VAL_TYPE(Type) PASTE(st -> val._, Type)
 
