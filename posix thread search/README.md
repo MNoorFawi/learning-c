@@ -7,7 +7,7 @@ $ Rscript example_array.R
 ```
 Compile the program:
 ```bash
-$ gcc -lpthread thread_search.c -o tsearch
+$ gcc thread_search.c -o tsearch -lpthread
 ```
 
 Run the program on an example file:
