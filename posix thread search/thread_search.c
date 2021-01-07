@@ -49,7 +49,7 @@ void * left(void * param) {
 void * right(void * param) {
   // we are not converting param to struct pointer as we can easily pass the pointer directly
   //arguments * args = (arguments * ) param;
-  argument * args = param;
+  arguments * args = param;
   int i; // i is long to be able to cast it from void* back and forth
   for (i = args -> middle; i < args -> len; ++i) {
     if (args -> number_array[i] == args -> val)
@@ -96,7 +96,7 @@ int main(int argc, char * argv[]) {
   arg -> middle = middle;
   // memory copy to assign arrays
   //memcpy(arg -> number_array, number_array, sizeof(arg -> number_array));
-  arg -> number_array = number_array
+  arg -> number_array = number_array;
 
   printf("Enter a Value to Search: ");
   while (scanf("%d", & arg -> val) == 1) { // assign the input to the val inside the struct
