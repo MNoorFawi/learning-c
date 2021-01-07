@@ -9,8 +9,7 @@
 
 // global struct to pass them as arguments to thread functions
 typedef struct {
-  int len, val, number_array[ARRLEN]; // give the array initial size for memcpy later
-  long middle; // because it will be used with another long
+  int len, val, * number_array, middle;
 }
 arguments;
 
@@ -18,10 +17,10 @@ void linear_search(int * array, int len, int val) {
   puts("\n##### SEARCHING LINEARLY #####\n");
   clock_t t;
   t = clock();
-  long i;
+  int i;
   for (i = 0; i < len; ++i) {
     if (array[i] == val)
-      printf("\tValue %d is found at index %ld\n", val, i);
+      printf("\tValue %d is found at index %d\n", val, i);
   }
   t = clock() - t;
   double time_taken = ((double) t) / CLOCKS_PER_SEC; // in seconds
@@ -48,15 +47,18 @@ void * left(void * param) {
 }
 
 void * right(void * param) {
-  arguments * args = (arguments * ) param;
-  long i; // i is long to be able to cast it from void* back and forth
+  // we are not converting param to struct pointer as we can easily pass the pointer directly
+  //arguments * args = (arguments * ) param;
+  argument * args = param;
+  int i; // i is long to be able to cast it from void* back and forth
   for (i = args -> middle; i < args -> len; ++i) {
     if (args -> number_array[i] == args -> val)
       break;
   }
   if (i >= args -> len) // if it goes outside the loop, it will never be bigger than len
     i = -1;
-  printf("\n\t(right) Value %d is found at index %ld\n", args -> val, i);
+  printf("\n\t(right) Value %d is found at index %d\n", args -> val, i);
+  // this would give a warning but ok, will not give if i was long
   return (void * ) i;
 }
 
@@ -65,7 +67,7 @@ int main(int argc, char * argv[]) {
   char args;
   int number, capacity = ARRLEN, iter = 0;
   int * number_array = (int * ) malloc(capacity * sizeof(int));
-  long middle;
+  int middle;
 
   if (argc != 2) {
     printf("Error: You need only 1 arguemnt which is array file ...\n");
@@ -93,7 +95,8 @@ int main(int argc, char * argv[]) {
   arg -> len = iter; // iter has the length of the file
   arg -> middle = middle;
   // memory copy to assign arrays
-  memcpy(arg -> number_array, number_array, sizeof(arg -> number_array));
+  //memcpy(arg -> number_array, number_array, sizeof(arg -> number_array));
+  arg -> number_array = number_array
 
   printf("Enter a Value to Search: ");
   while (scanf("%d", & arg -> val) == 1) { // assign the input to the val inside the struct
@@ -111,7 +114,7 @@ int main(int argc, char * argv[]) {
     // create threads
     if (pthread_create( & tleft, NULL, left, (void * ) arg) == -1) // passing arg pointer as void*
       error("Can't create thread left\n");
-    if (pthread_create( & tright, NULL, right, (void * ) arg) == -1)
+    if (pthread_create( & tright, NULL, right, arg) == -1) // we are passing a pointer directly
       error("Can't create thread right\n");
 
     // join results
@@ -121,7 +124,8 @@ int main(int argc, char * argv[]) {
     printf("\n\t*** Thread left returned %ld ***\n", (long) result); // printing void* as long
     if (pthread_join(tright, & result) == -1)
       error("Can't join thread right\n");
-    printf("\t*** Thread right returned %ld ***\n", (long) result);
+    printf("\t*** Thread right returned %d ***\n", (int) result); // here as int and would give a warning
+    // can also be converted using * (int *) result
 
     // calculate thread search time
     t = clock() - t;
